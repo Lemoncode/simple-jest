@@ -96,7 +96,7 @@ describe('fetchMembers', () => {
 +     .mockResolvedValue([]);
 ```
 
-- So far so good, now let's check the we got the memberreuqestcompleted
+- So far so good, now let's check the we got the memberequestcompleted
   action in our mockstore pending to be processed
 
 ```typescript
