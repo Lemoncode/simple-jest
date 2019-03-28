@@ -90,3 +90,53 @@ const deepFreeze = require('deep-freeze');
     expect(nextState.loginFormErrors.password).toEqual(new FieldValidationResult());
   });
 ```
+
+Now let's simulate a real action, we will check what happens when we update the login field
+(new state created including the update, plus Should return updated state without mutatin the former one):
+
+```typescript
+import { actionIds } from '../actions/actionIds';
+```
+
+```typescript
+ it(`should return updated state without mutate it
+ when passing state, UPDATE_LOGIN_ENTITY_FIELD action type and login field payload`, () => {
+     // Arrange
+     const state: LoginState = {
+       loginEntity: {
+         login: 'test login',
+         password: 'test password',
+       },
+       loginFormErrors: {
+         login: new FieldValidationResult(),
+         password: new FieldValidationResult(),
+       },
+     };
+
+     const action = {
+       type: actionIds.UPDATE_LOGIN_ENTITY_FIELD,
+       payload: {
+         fieldName: 'login',
+         value: '',
+         fieldValidationResult: {
+           succeeded: false,
+           errorMessage: 'test message',
+         } as FieldValidationResult,
+       },
+     };
+
+     deepFreeze(state);
+
+     // Act
+     const nextState = loginReducer(state, action);
+
+     // Assert
+     expect(nextState.loginEntity.login).toEqual('');
+     expect(nextState.loginEntity.password).toEqual('test password');
+     expect(nextState.loginFormErrors.login).toEqual({
+       errorMessage: 'test message',
+       succeeded: false,
+     } as FieldValidationResult);
+     expect(nextState.loginFormErrors.password).toEqual(new FieldValidationResult());
+   });
+```

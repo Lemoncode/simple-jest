@@ -1,6 +1,8 @@
 import { loginReducer, LoginState } from './login';
 import { FieldValidationResult } from 'lc-form-validation';
 const deepFreeze = require('deep-freeze');
+import { actionIds } from '../actions/actionIds';
+
 
 describe('login/reducers/loginReducer tests', () => {
   it('should return initial state when passing undefined state and some action type', () => {
