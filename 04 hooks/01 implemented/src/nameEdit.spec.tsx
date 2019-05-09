@@ -29,7 +29,9 @@ describe("NameEditComponent", () => {
       });  
     })
 
-    component.find("button").simulate("click");
+    act(() => {
+      component.find("button").simulate("click");
+    });
 
     // Assert
     expect(props.onNameUpdated).toHaveBeenCalledWith("updated");
